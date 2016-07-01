@@ -2,46 +2,69 @@ package ru.apache_maven;
 
 
 import java.util.Scanner;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Map;
 
 
-class PhoneBook
+class PhoneBookRecord
 {
-	String m_name = new String("");
-	Vector m_phones = new Vector();
+	private Map<String, ArrayList> m_rec = new HashMap<String, Arraylist>();
 	
-	PhoneBook(String name, Vector phones)
+	PhoneBookRecord(String name, ArrayList phones)
 	{
-		m_name += name;
-		m_phones.addAll(phones);
+		m_rec.put(name, phones);
 		
+	}
+	public String getName()
+	{
+		return m_rec.getKey;	
+	}
+	public ArrayList getPhones()
+	{
+		return m_rec.getValue();	
 	}
 	public void parseAndSet(String data)
 	{
-		String[] tmp = data.split(" +");
-		m_name = tmp[0];
+		String[] tmp = data.split("\\+");
+		String name = tmp[0];
+		ArrayList phones = new ArrayList();
 		for (int i = 1; i <= tmp.length-1; ++i)
 		{
-		    m_phones.add(tmp[i]);
+		    phones.add("+"+tmp[i]);
 		}
+		m_rec.put(name, phones);
 		
 	}
 	public void printPhone(){
-		System.out.println(m_name + " "); 
+		System.out.println(m_rec.getKey() + " " + m_rec.getValue().toString()); 
 	}
-	//serch.
 }
-
-
+/*
+public class PhoneBook
+{
+	private Vector m_records = new Vector();
+	PhoneBook(Vector rec)
+	{
+		m_records.addAll(rec);
+		
+	}
+	//
+	public void createPhoneBook()
+	{
+		
+	}
+}
+*/
 public class App 
 {
     public static void main( String[] args )
     {
 	Scanner sc = new Scanner(System.in);
-        System.out.println( "Enter data " );
 	String s;
-	s = sc.nextLine();
 	PhoneBook p = new PhoneBook("", new Vector());
+
+        System.out.println( "Enter data " );	
+	s = sc.nextLine();
 	p.parseAndSet(s);
 	p.printPhone();
     }
