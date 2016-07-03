@@ -4,68 +4,62 @@ package ru.apache_maven;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.HashMap;
 
-
-class PhoneBookRecord
+class PhoneBook
 {
-	private Map<String, ArrayList> m_rec = new HashMap<String, Arraylist>();
+	private Map<String, ArrayList> m_rec = new HashMap<String, ArrayList>();
 	
-	PhoneBookRecord(String name, ArrayList phones)
-	{
-		m_rec.put(name, phones);
-		
-	}
-	public String getName()
-	{
-		return m_rec.getKey;	
-	}
-	public ArrayList getPhones()
-	{
-		return m_rec.getValue();	
-	}
 	public void parseAndSet(String data)
 	{
 		String[] tmp = data.split("\\+");
-		String name = tmp[0];
+		String name = tmp[0].trim();
 		ArrayList phones = new ArrayList();
 		for (int i = 1; i <= tmp.length-1; ++i)
 		{
-		    phones.add("+"+tmp[i]);
+		    phones.add("+"+tmp[i].trim());
 		}
 		m_rec.put(name, phones);
 		
 	}
 	public void printPhone(){
-		System.out.println(m_rec.getKey() + " " + m_rec.getValue().toString()); 
+	    for (Map.Entry entry : m_rec.entrySet()) 
+	    {
+           System.out.println(entry.getKey() + " " + entry.getValue());
+        }
+ 
+	}
+	public void findByName(String name)
+	{
+	    
+	    if (! m_rec.containsKey(name) || m_rec.get(name).isEmpty()
+	    	System.out.println(name + " not found");    
+	   else
+	   	System.out.println(m_rec.get(name));
 	}
 }
-/*
-public class PhoneBook
-{
-	private Vector m_records = new Vector();
-	PhoneBook(Vector rec)
-	{
-		m_records.addAll(rec);
-		
-	}
-	//
-	public void createPhoneBook()
-	{
-		
-	}
-}
-*/
+
 public class App 
 {
     public static void main( String[] args )
     {
+	
+	PhoneBook p = new PhoneBook();
+
+	p.parseAndSet("Papandopulos Eugenie +888 666");
+	p.parseAndSet("Harry Potter +123 345 678 +987 765 555");
+	p.parseAndSet("Darth Wayder +666 666 666");
+	p.parseAndSet("Pupkin V. V. +1234567890 +56789");
+	p.parseAndSet("Sharikov P. P. +11111 +1111 +111111");
+	p.parseAndSet("Albus Percival Wulfric Brian Dumbledore +lemon sherbet");//TODO phoneNumber check
+	p.parseAndSet("Darth Wayder +666 666 666");
+	p.parseAndSet("Vasya ");	
+	p.printPhone();
+	
 	Scanner sc = new Scanner(System.in);
 	String s;
-	PhoneBook p = new PhoneBook("", new Vector());
-
-        System.out.println( "Enter data " );	
+	System.out.println( "Enter data " );
 	s = sc.nextLine();
-	p.parseAndSet(s);
-	p.printPhone();
+	p.findByName(s);
     }
 }
